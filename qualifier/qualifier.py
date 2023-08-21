@@ -1,3 +1,5 @@
+import PIL as pil
+
 def valid_input(image_size: tuple[int, int], tile_size: tuple[int, int], ordering: list[int]) -> bool:
     """
     Return True if the given input allows the rearrangement of the image, False otherwise.
@@ -5,6 +7,8 @@ def valid_input(image_size: tuple[int, int], tile_size: tuple[int, int], orderin
     The tile size must divide each image dimension without remainders, and `ordering` must use each input tile exactly
     once.
     """
+    if image_size%tile_size:
+        return False
 
 
 def rearrange_tiles(image_path: str, tile_size: tuple[int, int], ordering: list[int], out_path: str) -> None:
