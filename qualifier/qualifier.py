@@ -7,7 +7,7 @@ def valid_input(image_size: tuple[int, int], tile_size: tuple[int, int], orderin
     The tile size must divide each image dimension without remainders, and `ordering` must use each input tile exactly
     once.
     """
-    if image_size%tile_size:
+    if image_size[0]%tile_size[0] or image_size[1]%tile_size[1]:
         return False
 
 
