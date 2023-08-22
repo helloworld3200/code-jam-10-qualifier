@@ -1,5 +1,7 @@
 from PIL import Image
 
+#python -m unittest tests.py
+
 def valid_input(image_size: tuple[int, int], tile_size: tuple[int, int], ordering: list[int]) -> bool:
     """
     Return True if the given input allows the rearrangement of the image, False otherwise.
@@ -7,18 +9,22 @@ def valid_input(image_size: tuple[int, int], tile_size: tuple[int, int], orderin
     The tile size must divide each image dimension without remainders, and `ordering` must use each input tile exactly
     once.
     """
-    if image_size[0]%tile_size[0] or image_size[1]%tile_size[1]:
-        print("in image size modulus")
+    modulus_x = image_size[0]%tile_size[0]
+    modulus_y = image_size[1]%tile_size[1]
+    print("Modulus: ",modulus_x, modulus_y)
+
+    if modulus_x or modulus_y:
+        print("returning from modulus")
         return False
     
     tile_count = image_size[0]/tile_size[0]*image_size[1]/tile_size[1]
     sorted_order = sorted(ordering)
 
     if sorted_order[-1] != tile_count-1 or len(sorted_order) > len(set(sorted_order)):
-        print("in image tile sort")
+        print("Returning from same values")
         return False
     
-    print("past all")
+    print("Input valid")
     return True
 
 
@@ -38,6 +44,7 @@ def rearrange_tiles(image_path: str, tile_size: tuple[int, int], ordering: list[
             raise ValueError("The tile size or ordering are not valid for the given image")
 
         tile_count = (im.size[0]/tile_size[0], im.size[1]/tile_size[1])
+        print("Tile count: ",tile_count)
         tiles = []
         for x in range(0, tile_count[0]):
             for y in range(0, tile_count[1]):
