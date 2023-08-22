@@ -43,9 +43,12 @@ def rearrange_tiles(image_path: str, tile_size: tuple[int, int], ordering: list[
         if not valid_input(im.size, tile_size, ordering):
             raise ValueError("The tile size or ordering are not valid for the given image")
 
+        tile_count = (im.size[0]/tile_size[0], im.size[1]/tile_size[1])
         print("Tile count before conversion: ",tile_count)
-        tile_count = (int(im.size[0]/tile_size[0]), int(im.size[1]/tile_size[1]))
+        tile_count = (int(tile_count[0]), int(tile_count[1])) # Soleley for debug purposes, replace with line below after debugging.
+        #tile_count = (int(im.size[0]/tile_size[0]), int(im.size[1]/tile_size[1]))
         print("Tile count after conversion: ",tile_count)
+
         tiles = []
         for x in range(0, tile_count[0]):
             for y in range(0, tile_count[1]):
