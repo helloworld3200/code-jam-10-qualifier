@@ -8,16 +8,17 @@ def valid_input(image_size: tuple[int, int], tile_size: tuple[int, int], orderin
     once.
     """
     if image_size[0]%tile_size[0] or image_size[1]%tile_size[1]:
+        print("in image size modulus")
         return False
     
     tile_count = image_size[0]/tile_size[0]*image_size[1]/tile_size[1]
     sorted_order = sorted(ordering)
 
-    if sorted_order[-1] != tile_count:
-        return False
-    elif len(sorted_order) > len(set(sorted_order)):
+    if sorted_order[-1] != tile_count-1 or len(sorted_order) > len(set(sorted_order)):
+        print("in image tile sort")
         return False
     
+    print("past all")
     return True
 
 
@@ -32,3 +33,4 @@ def rearrange_tiles(image_path: str, tile_size: tuple[int, int], ordering: list[
     once. If these conditions do not hold, raise a ValueError with the message:
     "The tile size or ordering are not valid for the given image".
     """
+
