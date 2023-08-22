@@ -2,7 +2,7 @@ from PIL import Image
 
 def valid_input(image_size: tuple[int, int], tile_size: tuple[int, int], ordering: list[int]) -> bool:
     """
-    Return True if the given input allows the rearrangement of the image, False otherwise. done
+    Return True if the given input allows the rearrangement of the image, False otherwise.
 
     The tile size must divide each image dimension without remainders, and `ordering` must use each input tile exactly
     once.
@@ -42,4 +42,8 @@ def rearrange_tiles(image_path: str, tile_size: tuple[int, int], ordering: list[
         for x in range(0, tile_count[0]):
             for y in range(0, tile_count[1]):
                 tiles.append(im.crop((x*tile_size[0], y*tile_size[1], tile_size[0], tile_size[1])))
-
+        
+        for i in ordering:
+            for x in range(0, tile_count[0]):
+                for y in range(0, tile_count[1]):
+                    im.paste(im, tiles[i], (x*tile_size[0],y*tile_size[1]))
