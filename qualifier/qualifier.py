@@ -47,3 +47,5 @@ def rearrange_tiles(image_path: str, tile_size: tuple[int, int], ordering: list[
             for x in range(0, tile_count[0]):
                 for y in range(0, tile_count[1]):
                     im.paste(im, tiles[i], (x*tile_size[0],y*tile_size[1]))
+
+        im.save(out_path)
