@@ -21,7 +21,7 @@ def valid_input(image_size: tuple[int, int], tile_size: tuple[int, int], orderin
     sorted_order = sorted(ordering)
 
     if sorted_order[-1] != tile_count-1 or len(sorted_order) > len(set(sorted_order)):
-        print("Returning from same values")
+        print("Returning from same values in sorted order")
         return False
     
     print("Input valid")
