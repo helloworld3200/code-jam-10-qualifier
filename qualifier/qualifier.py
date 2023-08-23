@@ -49,17 +49,18 @@ def rearrange_tiles(image_path: str, tile_size: tuple[int, int], ordering: list[
         #tile_count = (int(im.size[0]/tile_size[0]), int(im.size[1]/tile_size[1]))
         #print("Tile count after conversion: ",tile_count)
 
-        tiles_pos = []
+        tiles = []
         x_range = range(0, tile_count[0])
         y_range = range(0, tile_count[1])
-        total = len(ordering) # x_Range*y_range is same as length of order
-        print("Length of order: ",len(ordering))
-        print("Length of total: ",total)
-        for x in x_range:
-            for y in y_range:
+        total = len(ordering)
+        #total_range = range(total) # x_Range*y_range is same as length of order
+        #print("Length of order: ",len(ordering))
+        #print("Length of total: ",total)
+        for y in y_range:
+            for x in x_range:
                 pos = (x*tile_size[0], y*tile_size[1])
                 dim = (pos[0], pos[1], pos[0]+tile_size[0], pos[1]+tile_size[1])
-                tiles_pos.append([im.crop(dim), pos])
+                tiles.append([im.crop(dim), pos])
         
         output = Image.new(im.mode, im.size)
 
@@ -71,14 +72,11 @@ def rearrange_tiles(image_path: str, tile_size: tuple[int, int], ordering: list[
                     #print("Position for current tile: ", pos)
                     im.paste(tiles[i], pos)
             print("At count: ",count," of ",total, end="\r", flush=True)"""
-        
 
-
-        """for count, i in enumerate(ordering):
+        # Maybe seperate this function into different parts to isolate the problem
+        for count, i in enumerate(ordering):
             output.paste(tiles[i][0], tiles[count][1])
-            print("At pos: ",tiles[count][1])"""
-        
-
+            print("At count: ",count," of ",total, end="\r", flush=True)
 
         # What am I doing? Why will different output solve the issue?
         output.save(out_path, format="png")
