@@ -45,29 +45,40 @@ def rearrange_tiles(image_path: str, tile_size: tuple[int, int], ordering: list[
 
         tile_count = (im.size[0]/tile_size[0], im.size[1]/tile_size[1])
         #print("Tile count before conversion: ",tile_count)
-        tile_count = (int(tile_count[0]), int(tile_count[1])) # Soleley for debug purposes, replace with line below after debugging.
+        tile_count = (int(tile_count[0]), int(tile_count[1])) # Solely for debug purposes, replace with line below after debugging.
         #tile_count = (int(im.size[0]/tile_size[0]), int(im.size[1]/tile_size[1]))
         #print("Tile count after conversion: ",tile_count)
 
-        tiles = []
+        tiles_pos = []
         x_range = range(0, tile_count[0])
         y_range = range(0, tile_count[1])
-        total = tile_count[0]*tile_count[1]
+        total = len(ordering) # x_Range*y_range is same as length of order
         print("Length of order: ",len(ordering))
         print("Length of total: ",total)
         for x in x_range:
             for y in y_range:
                 pos = (x*tile_size[0], y*tile_size[1])
-                tiles.append(im.crop((pos[0], pos[1], pos[0]+tile_size[0], pos[1]+tile_size[1])))
+                dim = (pos[0], pos[1], pos[0]+tile_size[0], pos[1]+tile_size[1])
+                tiles_pos.append([im.crop(dim), pos])
         
         output = Image.new(im.mode, im.size)
 
-        for count, i in enumerate(ordering):
+        # Why did I write this? Just use the positions here ^^^
+        """for count, i in enumerate(ordering):
             for x in x_range:
                 for y in y_range:
                     pos = (x*tile_size[0], y*tile_size[1])
                     #print("Position for current tile: ", pos)
                     im.paste(tiles[i], pos)
-            print("At count: ",count," of ",total, end="\r", flush=True)
+            print("At count: ",count," of ",total, end="\r", flush=True)"""
+        
 
+
+        """for count, i in enumerate(ordering):
+            output.paste(tiles[i][0], tiles[count][1])
+            print("At pos: ",tiles[count][1])"""
+        
+
+
+        # What am I doing? Why will different output solve the issue?
         output.save(out_path, format="png")
